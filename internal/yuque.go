@@ -2,7 +2,8 @@ package internal
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/pubgo/errors"
+	"github.com/pubgo/g/errors"
+	"github.com/pubgo/g/pkg"
 	"github.com/pubgo/yuque/internal/routes"
 	"sync"
 	"time"
@@ -10,6 +11,7 @@ import (
 
 type yqClient struct {
 	routes.YuqueUser
+	routes.YuqueGroup
 
 	c *resty.Request
 }
@@ -25,14 +27,14 @@ type YuQue struct {
 	yqClientMap      map[string]*resty.Client
 }
 
-func (t *YuQue) R(name string) *yqClient {
-	_, ok := t.yqClientMap[name]
-	errors.T(!ok, "%s not found", name)
+func (t *YuQue) R(name string) (c *yqClient, err error) {
+	defer errors.RespErr(&err)
 
-	_c := t.yqClientMap[name]
-	errors.T(errors.IsNone(_c), "%s is null", name)
+	_c, ok := t.yqClientMap[name]
+	errors.PanicT(!ok, "%s not found", name)
+	errors.PanicT(pkg.IsNone(_c), "%s is null", name)
 
-	return &yqClient{c: _c.R()}
+	return &yqClient{c: _c.R()}, nil
 }
 
 func (t *YuQue) AddAuth(name, token string) bool {

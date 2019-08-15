@@ -1,3 +1,3 @@
 package routes
 
-const apiProxy = "/api/v2"
+const apiPrefix = "/api/v2"
