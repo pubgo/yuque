@@ -56,7 +56,7 @@ func (t *YuQue) AddAuth(name, token string) bool {
 			"User-Agent":   t.AppName,
 			"X-Auth-Token": token,
 		})
-	return false
+	return true
 }
 
 var _yq *YuQue

@@ -2,12 +2,12 @@ package internal
 
 import (
 	"encoding/json"
-	"github.com/pubgo/g/errors"
+	"github.com/pubgo/g/xerror"
 	"net/http"
 )
 
 func (t *yqClient) get(r string, pathParams map[string]string, queryParams map[string]string, dt interface{}) (err error) {
-	defer errors.RespErr(&err)
+	defer xerror.RespErr(&err)
 
 	_c := t.c
 	if pathParams != nil {
@@ -18,8 +18,8 @@ func (t *yqClient) get(r string, pathParams map[string]string, queryParams map[s
 	}
 
 	resp, err := _c.Get(r)
-	errors.PanicM(err, "%s request error", r)
-	errors.PanicTT(resp.StatusCode() != http.StatusOK, func(err *errors.Err) {
+	xerror.PanicM(err, "%s request error", r)
+	xerror.PanicTT(resp.StatusCode() != http.StatusOK, func(err *xerror.Err) {
 		err.Msg("%s resp error", r)
 		err.M("status_code", resp.StatusCode())
 		if pathParams != nil {
@@ -30,12 +30,12 @@ func (t *yqClient) get(r string, pathParams map[string]string, queryParams map[s
 		}
 		err.M("resp_body", resp.String())
 	})
-	errors.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", r)
+	xerror.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", r)
 	return
 }
 
 func (t *yqClient) post(r string, pathParams map[string]string, body interface{}, dt interface{}) (err error) {
-	defer errors.RespErr(&err)
+	defer xerror.RespErr(&err)
 
 	_c := t.c
 	if pathParams != nil {
@@ -47,8 +47,8 @@ func (t *yqClient) post(r string, pathParams map[string]string, body interface{}
 	}
 
 	resp, err := _c.Post(r)
-	errors.PanicM(err, "%s request error", r)
-	errors.PanicTT(resp.StatusCode() != http.StatusOK, func(err *errors.Err) {
+	xerror.PanicM(err, "%s request error", r)
+	xerror.PanicTT(resp.StatusCode() != http.StatusOK, func(err *xerror.Err) {
 		err.Msg("%s resp error", r)
 		err.M("status_code", resp.StatusCode())
 		if pathParams != nil {
@@ -59,6 +59,6 @@ func (t *yqClient) post(r string, pathParams map[string]string, body interface{}
 		}
 		err.M("resp", resp.String())
 	})
-	errors.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", r)
+	xerror.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", r)
 	return
 }
