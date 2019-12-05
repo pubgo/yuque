@@ -1,7 +1,19 @@
 package models
 
-// user_detail
-// https://www.yuque.com/yuque/developer/userdetailserializer
+// 一般在列表的场景返回的用户信息
+// doc https://www.yuque.com/yuque/developer/userserializer
+type User struct {
+	ID        int    `json:"id"`
+	Type      string `json:"type"`
+	login     string
+	Name      string `json:"name"`
+	AvatarURL string `json:"avatar_url"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// 用户/团队详细信息
+// doc https://www.yuque.com/yuque/developer/userdetailserializer
 type UserDetail struct {
 	AccountID        int         `json:"account_id"`
 	AvatarURL        string      `json:"avatar_url"`
@@ -21,4 +33,6 @@ type UserDetail struct {
 	SpaceID          int         `json:"space_id"`
 	Type             string      `json:"type"`
 	UpdatedAt        string      `json:"updated_at"`
+	MembersCount     string      `json:"members_count"`
+	OwnerID          string      `json:"owner_id"`
 }
