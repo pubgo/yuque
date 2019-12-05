@@ -61,14 +61,3 @@ type GroupCreate struct {
 	Login       string `json:"login"`
 	Description string `json:"description"`
 }
-
-type Group struct {
-	Id *string `json:"id" xml:"id"`
-	Login *string `json:"login" xml:"login" require:"true"`
-	Name *string `json:"name" xml:"name" require:"true"`
-	AvatarUrl *string `json:"avatar_url" xml:"avatar_url"`
-	OwnerId *string `json:"owner_id" xml:"owner_id" require:"true"`
-	Description *string `json:"description" xml:"description" require:"true"`
-	CreatedAt *string `json:"created_at" xml:"created_at" require:"true"`
-	UpdatedAt *string `json:"updated_at" xml:"updated_at" require:"true"`
-}

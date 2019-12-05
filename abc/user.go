@@ -22,7 +22,6 @@ var _url = func(url string) func(...interface{}) string {
 // 获取单个用户信息
 // 基于用户 login 或 id 获取一个用户的基本信息
 var GetUser = _url("/users/%s")
-var GetUserByName = _url("/users/%s")
 
 // 获取认证的用户的个人信息 [需要认证]
 // 获取当前 Token 对应的用户的个人信息

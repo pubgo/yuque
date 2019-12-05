@@ -26,39 +26,31 @@ type YuqueRepo interface {
 
 // 获取一个仓库的文档列表
 var GetUserRepos = _url("/users/%s/repos")
-var GetUserReposByName = _url("/users/%s/repos")
 var GetGroupRepos = _url("/groups/%s/repos")
-var GetGroupReposByName = _url("/groups/%s/repos")
 
 // 创建新仓库
 // 往组织创建仓库
 var CreateGroupRepo = _url("/groups/%s/repos")
-var CreateGroupRepoByName = _url("/groups/%s/repos")
 
 // 往自己下面创建仓库
 // 需要 Group 的 abilities.repo.create 权限
 var CreateUserRepo = _url("/users/%s/repos")
-var CreateUserRepoByName = _url("/users/%s/repos")
 
 // 获取仓库详情
 var GetRepo = _url("/repos/%s")
-var GetRepoByName = _url("/repos/%s")
 
 // 更新仓库信息
 // 需要 Repo 的 abilities.update 权限
 var UpdateRepo = _url("/repos/%s")
-var UpdateRepoByName = _url("/repos/%s")
 
 // 删除仓库
 // 需要 Repo 的 abilities.destroy 权限
 var DelRepo = _url("/repos/%s")
-var DelRepoByName = _url("/repos/%s")
 
 // 获取一个仓库的目录结构
 // 需要 Repo 的 abilities.read 权限
 // 如果是 Group 成员，将能获取到私密文档、未发布的草稿
 var GetRepoToc = _url("/repos/%s/toc")
-var GetRepoTocByName = _url("/repos/%s/toc")
 
 // 基于关键字搜索仓库
 // 无法搜索到私密仓库

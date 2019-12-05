@@ -76,6 +76,6 @@ func (t *yqRepo) GetRepoTocByName(repoName string) (_ *models.BookToc, err error
 	panic("implement me")
 }
 
-func (t *yqRepo) SearchRepo() func(string, string) (err error) {
+func (t *yqRepo) SearchRepo(q, typ string) (err error) {
 	panic("implement me")
 }

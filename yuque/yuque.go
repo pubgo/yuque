@@ -4,9 +4,9 @@ package yuque
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/pubgo/g/errors"
 	"github.com/pubgo/g/pkg"
-	"github.com/pubgo/g/xinit"
+	"github.com/pubgo/g/xdi"
+	"github.com/pubgo/g/xerror"
 	"github.com/pubgo/yuque/abc"
 	"time"
 )
@@ -31,7 +31,7 @@ type YuQue struct {
 }
 
 func (t *YuQue) Group() *yqGroup {
-	errors.PanicT(pkg.IsNone(t.yqClient), "yuque client is null")
+	xerror.PanicT(pkg.IsNone(t.yqClient), "yuque client is null")
 	return &yqGroup{c: t.yqClient.R()}
 }
 
@@ -52,8 +52,8 @@ func (t *YuQue) AddAuth(token string) {
 }
 
 func init() {
-	xinit.InitProvide(func() *YuQue {
-		_yq := &YuQue{
+	xdi.InitProvide(func() *YuQue {
+		return &YuQue{
 			AppName:          "test",
 			RetryCount:       3,
 			RetryWaitTime:    5,
@@ -62,6 +62,5 @@ func init() {
 			Debug:            true,
 		}
 
-		return _yq
 	})
 }

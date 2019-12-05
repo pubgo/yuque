@@ -69,16 +69,12 @@ func (t *yqGroup) GetUserGroups(userId string) (res []*models.Group, err error) 
 	defer xerror.RespErr(&err)
 
 	_dt := make(map[string][]*models.Group)
-	xerror.Panic(yqGet(t.c, abc.GetUserByName(userId), nil, &_dt))
+	xerror.Panic(yqGet(t.c, abc.GetUserGroups(userId), nil, &_dt))
 	return _dt["data"], nil
 }
 
 func (t *yqGroup) GetUserGroupsByName(username string) (res []*models.Group, err error) {
-	defer xerror.RespErr(&err)
-
-	_dt := make(map[string][]*models.Group)
-	xerror.Panic(yqGet(t.c, abc.GetUserGroupsByName(username), nil, &_dt))
-	return _dt["data"], nil
+	return t.GetUserGroups(username)
 }
 
 func (t *yqGroup) GetMyPubGroups() (res []*models.Group, err error) {
