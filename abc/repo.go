@@ -9,10 +9,10 @@ type YuqueRepo interface {
 	GetUserReposByName(username string) func(string, int) (_ []*models.Book, err error)
 	GetGroupRepos(groupId string) func(string, int) (_ []*models.Book, err error)
 	GetGroupReposByName(groupName string) func(string, int) (_ []*models.Book, err error)
-	CreateUserRepo(userId string) (_ *models.Book, err error)
-	CreateUserRepoByName(username string) (_ *models.Book, err error)
-	CreateGroupRepo(groupId string) (_ *models.Book, err error)
-	CreateGroupRepoByName(groupName string) (_ *models.Book, err error)
+	CreateUserRepo(userId string) func(data *models.BookCreate) (_ *models.Book, err error)
+	CreateUserRepoByName(username string) func(data *models.BookCreate) (_ *models.Book, err error)
+	CreateGroupRepo(groupId string) func(data *models.BookCreate) (_ *models.Book, err error)
+	CreateGroupRepoByName(groupName string) func(data *models.BookCreate) (_ *models.Book, err error)
 	GetRepo(repoId string) func(string) (_ *models.Book, err error)
 	GetRepoByName(repoName string) func(string) (_ *models.Book, err error)
 	UpdateRepo(repoId string) func(*models.BookCreate) (_ *models.Book, err error)
@@ -21,7 +21,7 @@ type YuqueRepo interface {
 	DelByName(repoName string) (_ *models.Book, err error)
 	GetRepoToc(repoId string) (_ *models.BookToc, err error)
 	GetRepoTocByName(repoName string) (_ *models.BookToc, err error)
-	SearchRepo(q, typ string) (err error)
+	SearchRepo(q, typ string) (_ *models.Search, err error)
 }
 
 // 获取一个仓库的文档列表

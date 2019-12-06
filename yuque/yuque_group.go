@@ -7,70 +7,78 @@ import (
 	"github.com/pubgo/yuque/models"
 )
 
-var _ abc.YuqueGroup = &yqGroup{}
+var _ abc.YuqueGroup = (*yqGroup)(nil)
 
 type yqGroup struct {
 	c *resty.Request
 }
 
-func (t *yqGroup) CreateGroup(group *models.GroupCreate) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+func (t *yqGroup) CreateGroup(data *models.GroupCreate) (_ *models.GroupDetail, err error) {
+	_dt := make(map[string]*models.GroupDetail)
+	return _dt["data"], xerror.Wrap(yqPost(t.c, abc.CreateGroup(), data, &_dt), "yqGroup.CreateGroup")
 }
 
 func (t *yqGroup) GetGroup(groupId string) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	_dt := make(map[string]*models.GroupDetail)
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.UpdateGroupMember(groupId), nil, &_dt), "yqGroup.GetGroup")
 }
 
 func (t *yqGroup) GetGroupByName(groupName string) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	return t.GetGroup(groupName)
 }
 
 func (t *yqGroup) UpdateGroup(groupId string) func(group *models.GroupCreate) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	return func(data *models.GroupCreate) (_ *models.GroupDetail, err error) {
+		_dt := make(map[string]*models.GroupDetail)
+		return _dt["data"], xerror.Wrap(yqPost(t.c, abc.UpdateGroupMember(groupId), data, &_dt), "yqGroup.UpdateGroup")
+	}
 }
 
 func (t *yqGroup) UpdateGroupByName(groupName string) func(group *models.GroupCreate) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	return t.UpdateGroup(groupName)
 }
 
 func (t *yqGroup) DelGroup(groupId string) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	_dt := make(map[string]*models.GroupDetail)
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.DelGroup(groupId), nil, &_dt), "yqGroup.DelGroup")
 }
 
 func (t *yqGroup) DelGroupByName(groupName string) (_ *models.GroupDetail, err error) {
-	panic("implement me")
+	return t.DelGroup(groupName)
 }
 
 func (t *yqGroup) GetGroupMembers(groupId string) (_ []*models.GroupUser, err error) {
-	panic("implement me")
+	_dt := make(map[string][]*models.GroupUser)
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetGroupMembers(groupId), nil, &_dt), "yqGroup.GetGroupMembers")
 }
 
 func (t *yqGroup) GetGroupMembersByName(groupName string) (_ []*models.GroupUser, err error) {
-	panic("implement me")
+	return t.GetGroupMembers(groupName)
 }
 
-func (t *yqGroup) UpdateGroupMember(groupId, userName string) func(_ *models.GroupCreate) (_ *models.GroupUser, err error) {
-	panic("implement me")
+func (t *yqGroup) UpdateGroupMember(groupId, username string) func(_ *models.GroupCreate) (_ *models.GroupUser, err error) {
+	return func(data *models.GroupCreate) (_ *models.GroupUser, err error) {
+		_dt := make(map[string]*models.GroupUser)
+		return _dt["data"], xerror.Wrap(yqPost(t.c, abc.UpdateGroupMember(groupId, username), data, &_dt), "yqGroup.UpdateGroupMember")
+	}
 }
 
-func (t *yqGroup) UpdateGroupMemberByName(groupName, userName string) func(_ *models.GroupCreate) (_ *models.GroupUser, err error) {
-	panic("implement me")
+func (t *yqGroup) UpdateGroupMemberByName(groupName, username string) func(_ *models.GroupCreate) (_ *models.GroupUser, err error) {
+	return t.UpdateGroupMember(groupName, username)
 }
 
-func (t *yqGroup) DelGroupMember(groupId, userName string) (_ *models.GroupUser, err error) {
-	panic("implement me")
+func (t *yqGroup) DelGroupMember(groupId, username string) (_ *models.GroupUser, err error) {
+	_dt := make(map[string]*models.GroupUser)
+	return _dt["data"], xerror.Wrap(yqDelete(t.c, abc.DelGroupMember(groupId, username), nil, &_dt), "yqGroup.DelGroupMember")
 }
 
-func (t *yqGroup) DelGroupMemberByName(groupName, userName string) (_ *models.GroupUser, err error) {
-	panic("implement me")
+func (t *yqGroup) DelGroupMemberByName(groupName, username string) (_ *models.GroupUser, err error) {
+	return t.DelGroupMember(groupName, username)
 }
 
 func (t *yqGroup) GetUserGroups(userId string) (res []*models.Group, err error) {
-	defer xerror.RespErr(&err)
-
 	_dt := make(map[string][]*models.Group)
-	xerror.Panic(yqGet(t.c, abc.GetUserGroups(userId), nil, &_dt))
-	return _dt["data"], nil
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetUserGroups(userId), nil, &_dt), "yqGroup.GetUserGroups")
 }
 
 func (t *yqGroup) GetUserGroupsByName(username string) (res []*models.Group, err error) {
@@ -78,9 +86,6 @@ func (t *yqGroup) GetUserGroupsByName(username string) (res []*models.Group, err
 }
 
 func (t *yqGroup) GetMyPubGroups() (res []*models.Group, err error) {
-	defer xerror.RespErr(&err)
-
 	_dt := make(map[string][]*models.Group)
-	xerror.Panic(yqGet(t.c, abc.GetMyPubGroups(), nil, &_dt))
-	return _dt["data"], nil
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetMyPubGroups(), nil, &_dt), "yqGroup.GetMyPubGroups")
 }

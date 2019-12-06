@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-const BaseUrlPrefix = "/api/v2"
-
 type yqClient struct {
 	abc.YuqueUser
 	abc.YuqueGroup
