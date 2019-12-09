@@ -11,17 +11,27 @@ import (
 const BaseUrlPrefix = "/api/v2"
 
 func yqVerb(c *resty.Request, url string, pathParams map[string]string, queryParams map[string]string, dt interface{}) (err error) {
+	defer xerror.RespErr(&err)
+	xerror.PanicT(dt == nil, "response error")
+
 	url = BaseUrlPrefix + url
+	return
 }
 
 func yqPut(c *resty.Request, url string, body interface{}, dt interface{}) (err error) {
+	defer xerror.RespErr(&err)
+
+	xerror.PanicT(dt == nil, "response error")
 	url = BaseUrlPrefix + url
 
 	c.SetHeader("Content-Type", "application/json")
+	return
 }
 
 func yqDelete(c *resty.Request, url string, queryParams map[string]string, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
+
+	xerror.PanicT(dt == nil, "response error")
 
 	url = BaseUrlPrefix + url
 
@@ -40,7 +50,7 @@ func yqDelete(c *resty.Request, url string, queryParams map[string]string, dt in
 		}
 		err.M("resp_body", resp.String())
 	})
-	xerror.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", url)
+	xerror.PanicM(json.Unmarshal(resp.Body(), dt), "%s resp decode error", url)
 	return
 }
 
@@ -67,13 +77,15 @@ func yqGet(c *resty.Request, url string, queryParams map[string]string, dt inter
 		err.M("resp_body", resp.String())
 	})
 	if dt != nil {
-		xerror.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", url)
+		xerror.PanicM(json.Unmarshal(resp.Body(), dt), "%s resp decode error", url)
 	}
 	return
 }
 
 func yqPost(c *resty.Request, url string, body interface{}, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
+
+	xerror.PanicT(dt == nil, "response error")
 
 	url = BaseUrlPrefix + url
 
@@ -96,7 +108,7 @@ func yqPost(c *resty.Request, url string, body interface{}, dt interface{}) (err
 		err.M("resp", resp.String())
 	})
 	if dt != nil {
-		xerror.PanicM(json.Unmarshal(resp.Body(), &dt), "%s resp decode error", url)
+		xerror.PanicM(json.Unmarshal(resp.Body(), dt), "%s resp decode error", url)
 	}
 
 	return

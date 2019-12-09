@@ -4,36 +4,65 @@ package yuque
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/pubgo/g/pkg"
-	"github.com/pubgo/g/xdi"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
 	"time"
 )
 
-type yqClient struct {
-	abc.YuqueUser
-	abc.YuqueGroup
-
-	c *resty.Request
-}
-
 type YuQue struct {
-	AppName          string
-	RetryCount       int
-	RetryWaitTime    int
-	RetryMaxWaitTime int
-	Timeout          int
-	Debug            bool
+	AppName          string // default test
+	RetryCount       int    // default 3
+	RetryWaitTime    int    // default 5 second
+	RetryMaxWaitTime int    // default 20 second
+	Timeout          int    // default 60 second
+	Debug            bool   // default true
 	yqClient         *resty.Client
 }
 
-func (t *YuQue) Group() *yqGroup {
-	xerror.PanicT(pkg.IsNone(t.yqClient), "yuque client is null")
-	return &yqGroup{c: t.yqClient.R()}
+func (t *YuQue) Group() YQGroup {
+	xerror.PanicT(t.yqClient == nil, "yuque client is null")
+	return YQGroup{c: t.yqClient.R()}
+}
+
+func (t *YuQue) User() YQUser {
+	xerror.PanicT(t.yqClient == nil, "yuque client is null")
+	return YQUser{c: t.yqClient.R()}
+}
+
+func (t *YuQue) Repo() YQRepo {
+	xerror.PanicT(t.yqClient == nil, "yuque client is null")
+	return YQRepo{c: t.yqClient.R()}
+}
+
+func (t *YuQue) Doc() YQDoc {
+	xerror.PanicT(t.yqClient == nil, "yuque client is null")
+	return YQDoc{c: t.yqClient.R()}
+}
+
+func (t *YuQue) _init() {
+	if t.AppName == "" {
+		t.AppName = "test"
+	}
+
+	if t.RetryCount < 1 {
+		t.RetryCount = 3
+	}
+
+	if t.RetryWaitTime < 1 {
+		t.RetryWaitTime = 5
+	}
+
+	if t.RetryMaxWaitTime < 1 {
+		t.RetryMaxWaitTime = 20
+	}
+
+	if t.Timeout < 1 {
+		t.Timeout = 60
+	}
 }
 
 func (t *YuQue) AddAuth(token string) {
+	t._init()
+
 	t.yqClient = resty.New().
 		SetDebug(t.Debug).
 		SetContentLength(true).
@@ -49,16 +78,8 @@ func (t *YuQue) AddAuth(token string) {
 		})
 }
 
-func init() {
-	xdi.InitProvide(func() *YuQue {
-		return &YuQue{
-			AppName:          "test",
-			RetryCount:       3,
-			RetryWaitTime:    5,
-			RetryMaxWaitTime: 20,
-			Timeout:          60,
-			Debug:            true,
-		}
-
-	})
+func New() *YuQue {
+	_yq := &YuQue{Debug: true}
+	_yq._init()
+	return _yq
 }

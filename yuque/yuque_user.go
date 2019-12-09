@@ -7,22 +7,22 @@ import (
 	"github.com/pubgo/yuque/models"
 )
 
-var _ abc.YuqueUser = (*yqUser)(nil)
+var _ abc.YuqueUser = (*YQUser)(nil)
 
-type yqUser struct {
+type YQUser struct {
 	c *resty.Request
 }
 
-func (t *yqUser) GetMe() (res *models.UserDetail, err error) {
+func (t YQUser) GetMe() (res *models.UserDetail, err error) {
 	_dt := make(map[string]*models.UserDetail)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetMe(), nil, &_dt), "yqUser.GetMe")
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetMe(), nil, &_dt), "YQUser.GetMe")
 }
 
-func (t *yqUser) GetUser(userId string) (res *models.UserDetail, err error) {
+func (t YQUser) GetUser(userId string) (res *models.UserDetail, err error) {
 	_dt := make(map[string]*models.UserDetail)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetUser(userId), nil, &_dt), "yqUser.GetUser")
+	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetUser(userId), nil, &_dt), "YQUser.GetUser")
 }
 
-func (t *yqUser) GetUserByName(username string) (res *models.UserDetail, err error) {
+func (t YQUser) GetUserByName(username string) (res *models.UserDetail, err error) {
 	return t.GetUser(username)
 }

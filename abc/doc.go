@@ -1,3 +1,5 @@
+// doc https://www.yuque.com/yuque/developer/doc
+
 package abc
 
 import "github.com/pubgo/yuque/models"
