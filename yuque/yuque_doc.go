@@ -7,7 +7,14 @@ import (
 	"github.com/pubgo/yuque/models"
 )
 
-var _ abc.YuqueDoc = (YQDoc)(nil)
+var (
+	_          abc.YuqueDoc = (YQDoc)(nil)
+	_GetDocs                = _url("/repos/%s/docs")
+	_CreateDoc              = _url("/repos/%s/docs")
+	_GetDoc                 = _url("/repos/%s/docs/%s")
+	_UpdateDoc              = _url("/repos/%s/docs/%s")
+	_DelDoc                 = _url("/repos/%s/docs/%s")
+)
 
 type YQDoc struct {
 	c *resty.Request
@@ -15,7 +22,7 @@ type YQDoc struct {
 
 func (t YQDoc) GetDocs(RepoId string) (_ []*models.Doc, err error) {
 	_dt := make(map[string][]*models.Doc)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetDocs(RepoId), nil, &_dt), "yqRepo.GetDocs")
+	return _dt["data"], xerror.Wrap(yqGet(t.c, _GetDocs(RepoId), nil, &_dt), "yqRepo.GetDocs")
 }
 
 func (t YQDoc) GetDocsByName(RepoName string) (_ []*models.Doc, err error) {
@@ -25,7 +32,7 @@ func (t YQDoc) GetDocsByName(RepoName string) (_ []*models.Doc, err error) {
 func (t YQDoc) CreateDoc(RepoId string) func(create *models.DocCreate) (_ *models.Doc, err error) {
 	return func(data *models.DocCreate) (_ *models.Doc, err error) {
 		_dt := make(map[string]*models.Doc)
-		return _dt["data"], xerror.Wrap(yqPost(t.c, abc.CreateDoc(RepoId), data, &_dt), "yqRepo.CreateDoc")
+		return _dt["data"], xerror.Wrap(yqPost(t.c, _CreateDoc(RepoId), data, &_dt), "yqRepo.CreateDoc")
 	}
 }
 
@@ -36,7 +43,7 @@ func (t YQDoc) CreateDocByName(RepoName string) func(create *models.DocCreate) (
 func (t YQDoc) UpdateDoc(RepoId string, DocId string) func(create *models.DocCreate) (_ *models.Doc, err error) {
 	return func(data *models.DocCreate) (_ *models.Doc, err error) {
 		_dt := make(map[string]*models.Doc)
-		return _dt["data"], xerror.Wrap(yqPut(t.c, abc.CreateDoc(RepoId, DocId), data, &_dt), "yqRepo.UpdateDoc")
+		return _dt["data"], xerror.Wrap(yqPut(t.c, _UpdateDoc(RepoId, DocId), data, &_dt), "yqRepo.UpdateDoc")
 	}
 }
 
@@ -46,7 +53,7 @@ func (t YQDoc) UpdateDocByName(RepoName string, DocId string) func(create *model
 
 func (t YQDoc) GetDoc(RepoId string, DocId string) (_ *models.Doc, err error) {
 	_dt := make(map[string]*models.Doc)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, abc.GetDoc(RepoId, DocId), nil, &_dt), "yqRepo.GetDoc")
+	return _dt["data"], xerror.Wrap(yqGet(t.c, _GetDoc(RepoId, DocId), nil, &_dt), "yqRepo.GetDoc")
 }
 
 func (t YQDoc) GetDocByName(RepoName string, DocId string) (_ *models.Doc, err error) {
@@ -55,7 +62,7 @@ func (t YQDoc) GetDocByName(RepoName string, DocId string) (_ *models.Doc, err e
 
 func (t YQDoc) DelDoc(RepoId string, DocId string) (_ *models.Doc, err error) {
 	_dt := make(map[string]*models.Doc)
-	return _dt["data"], xerror.Wrap(yqDelete(t.c, abc.DelDoc(RepoId, DocId), nil, &_dt), "yqRepo.DelDoc")
+	return _dt["data"], xerror.Wrap(yqDelete(t.c, _DelDoc(RepoId, DocId), nil, &_dt), "yqRepo.DelDoc")
 }
 
 func (t YQDoc) DelDocByName(RepoName string, DocId string) (_ *models.Doc, err error) {
