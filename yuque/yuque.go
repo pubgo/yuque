@@ -79,7 +79,7 @@ func (t *YuQue) AddAuth(token string) {
 }
 
 func New() *YuQue {
-	_yq := &YuQue{Debug: true}
+	_yq := &YuQue{}
 	_yq._init()
 	return _yq
 }

@@ -1,30 +1,29 @@
 package tests
 
 import (
-	"github.com/pubgo/g/xdi"
-	"github.com/pubgo/g/xenv"
+	"fmt"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/g/xinit"
-	"github.com/pubgo/yuque/yuque"
 	"testing"
 )
 
-var q *yuque.YuQue
-
-func init() {
+func TestGetMe(t *testing.T) {
 	defer xerror.Assert()
-	xerror.Panic(xenv.SetDebug())
-	xerror.Panic(xenv.LoadFile("../.env"))
 
-	xdi.InitInvoke(func(_que *yuque.YuQue) {
-		q.AddAuth(xenv.GetEnv("token"))
-		q = _que
-	})
+	xerror.PanicErr(yq.User().GetMe())
+
 }
 
-func TestUser(t *testing.T) {
+func TestGetUser(t *testing.T) {
 	defer xerror.Assert()
 
-	xerror.Panic(xinit.Start())
+	xerror.PanicErr(yq.User().GetUser("253323"))
+}
 
+func TestGetUserReposByName(t *testing.T) {
+	defer xerror.Assert()
+
+	_, err := yq.User().GetUser("barry.me")
+	fmt.Printf("%s", err)
+	xerror.ErrHandle(err, func(err *xerror.Err) {
+	})
 }

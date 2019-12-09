@@ -114,13 +114,13 @@ func yqPost(c *resty.Request, url string, body interface{}, dt interface{}) (err
 	return
 }
 
-func RateLimit(resp *resty.Response) {
+func _RateLimit(resp *resty.Response) {
 	// 总次数
 	resp.Header().Get("X-RateLimit-Limit")
 	// 剩余次数
 	resp.Header().Get("X-RateLimit-Remaining")
 }
 
-func IsRateLimitOver(resp *resty.Response) bool {
+func _IsRateLimitOver(resp *resty.Response) bool {
 	return resp.StatusCode() == 429 && strings.Contains(strings.ToLower(resp.String()), `too many requests`)
 }

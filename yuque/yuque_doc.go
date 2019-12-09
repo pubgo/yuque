@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	_          abc.YuqueDoc = (YQDoc)(nil)
+	_          abc.YuqueDoc = (*YQDoc)(nil)
 	_GetDocs                = _url("/repos/%s/docs")
 	_CreateDoc              = _url("/repos/%s/docs")
 	_GetDoc                 = _url("/repos/%s/docs/%s")
