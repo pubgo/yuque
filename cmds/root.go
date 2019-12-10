@@ -3,8 +3,8 @@ package cmds
 import (
 	"github.com/pubgo/g/version"
 	"github.com/pubgo/g/xcmds"
-	"github.com/pubgo/g/xcmds/xcmd_ss"
 	"github.com/pubgo/g/xerror"
+	"github.com/pubgo/yuque/cmds/yuque"
 )
 
 const Service = "yuque"
@@ -17,5 +17,5 @@ var Execute = xcmds.Init(EnvPrefix, func(cmd *xcmds.Command) {
 	cmd.Use = Service
 	cmd.Version = version.Version
 
-	xcmd_ss.Init()
+	yuque.Version()
 })

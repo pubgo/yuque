@@ -35,25 +35,25 @@ type Group struct {
 }
 
 type GroupDetail struct {
-	Abilities struct {
-		Destroy   bool `json:"destroy"`
-		GroupUser struct {
-			Create  bool `json:"create"`
-			Destroy bool `json:"destroy"`
-			Update  bool `json:"update"`
-		} `json:"group_user"`
-		Read bool `json:"read"`
-		Repo struct {
-			Create  bool `json:"create"`
-			Destroy bool `json:"destroy"`
-			Update  bool `json:"update"`
-		} `json:"repo"`
-		Update bool `json:"update"`
-	} `json:"abilities"`
-	Data Group `json:"data"`
-	Meta struct {
-		TopicEnable int `json:"topic_enable"`
-	} `json:"meta"`
+	AvatarURL         string `json:"avatar_url"`
+	BooksCount        int    `json:"books_count"`
+	CreatedAt         string `json:"created_at"`
+	Description       string `json:"description"`
+	ID                int    `json:"id"`
+	LargeAvatarURL    string `json:"large_avatar_url"`
+	Login             string `json:"login"`
+	MediumAvatarURL   string `json:"medium_avatar_url"`
+	MembersCount      int    `json:"members_count"`
+	Name              string `json:"name"`
+	OrganizationID    int    `json:"organization_id"`
+	OwnerID           int    `json:"owner_id"`
+	Public            int    `json:"public"`
+	PublicBooksCount  int    `json:"public_books_count"`
+	PublicTopicsCount int    `json:"public_topics_count"`
+	SmallAvatarURL    string `json:"small_avatar_url"`
+	SpaceID           int    `json:"space_id"`
+	TopicsCount       int    `json:"topics_count"`
+	UpdatedAt         string `json:"updated_at"`
 }
 
 type GroupCreate struct {

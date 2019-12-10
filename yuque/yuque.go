@@ -4,7 +4,9 @@ package yuque
 
 import (
 	"github.com/go-resty/resty/v2"
+	"github.com/pubgo/g/xenv"
 	"github.com/pubgo/g/xerror"
+	"github.com/pubgo/yuque/abc"
 	"time"
 )
 
@@ -18,22 +20,22 @@ type YuQue struct {
 	yqClient         *resty.Client
 }
 
-func (t *YuQue) Group() YQGroup {
+func (t *YuQue) Group() abc.YuqueGroup {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQGroup{c: t.yqClient.R()}
 }
 
-func (t *YuQue) User() YQUser {
+func (t *YuQue) User() abc.YuqueUser {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQUser{c: t.yqClient.R()}
 }
 
-func (t *YuQue) Repo() YQRepo {
+func (t *YuQue) Repo() abc.YuqueRepo {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQRepo{c: t.yqClient.R()}
 }
 
-func (t *YuQue) Doc() YQDoc {
+func (t *YuQue) Doc() abc.YuqueDoc {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQDoc{c: t.yqClient.R()}
 }
@@ -58,6 +60,8 @@ func (t *YuQue) _init() {
 	if t.Timeout < 1 {
 		t.Timeout = 60
 	}
+
+	t.Debug = xenv.IsDebug()
 }
 
 func (t *YuQue) AddAuth(token string) {

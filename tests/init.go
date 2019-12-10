@@ -7,12 +7,13 @@ import (
 )
 
 var yq *yuque.YuQue
+var username = "barry.bai"
+var userId = "253323"
 
 func init() {
 	defer xerror.Assert()
 	xerror.Panic(xenv.LoadFile("../.env"))
 
 	yq = yuque.New()
-	yq.Debug = xenv.IsDebug()
 	yq.AddAuth(xenv.GetEnv("token"))
 }

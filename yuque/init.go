@@ -23,9 +23,7 @@ func Debug(d ...interface{}) {
 		case reflect.String, reflect.Slice:
 			fmt.Println(i)
 		case reflect.Struct, reflect.Ptr, reflect.Map:
-			dt, err := json.MarshalIndent(i, "", "\t")
-			xerror.PanicM(err, "P json MarshalIndent error")
-			fmt.Println(string(dt))
+			fmt.Printf("%s", xerror.PanicErr(json.MarshalIndent(i, "", "\t")))
 		default:
 			fmt.Printf("%#v\n", i)
 		}

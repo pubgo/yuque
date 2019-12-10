@@ -41,7 +41,7 @@ func (t YQGroup) GetGroupByName(groupName string) (_ *models.GroupDetail, err er
 func (t YQGroup) UpdateGroup(groupId string) func(group *models.GroupCreate) (_ *models.GroupDetail, err error) {
 	return func(data *models.GroupCreate) (_ *models.GroupDetail, err error) {
 		_dt := make(map[string]*models.GroupDetail)
-		return _dt["data"], xerror.Wrap(yqPost(t.c, _UpdateGroup(groupId), data, &_dt), "YQGroup.UpdateGroup")
+		return _dt["data"], xerror.Wrap(yqPut(t.c, _UpdateGroup(groupId), data, &_dt), "YQGroup.UpdateGroup")
 	}
 }
 
@@ -51,7 +51,7 @@ func (t YQGroup) UpdateGroupByName(groupName string) func(group *models.GroupCre
 
 func (t YQGroup) DelGroup(groupId string) (_ *models.GroupDetail, err error) {
 	_dt := make(map[string]*models.GroupDetail)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, _DelGroup(groupId), nil, &_dt), "YQGroup.DelGroup")
+	return _dt["data"], xerror.Wrap(yqDelete(t.c, _DelGroup(groupId), nil, &_dt), "YQGroup.DelGroup")
 }
 
 func (t YQGroup) DelGroupByName(groupName string) (_ *models.GroupDetail, err error) {
@@ -70,7 +70,7 @@ func (t YQGroup) GetGroupMembersByName(groupName string) (_ []*models.GroupUser,
 func (t YQGroup) UpdateGroupMember(groupId, username string) func(_ *models.GroupCreate) (_ *models.GroupUser, err error) {
 	return func(data *models.GroupCreate) (_ *models.GroupUser, err error) {
 		_dt := make(map[string]*models.GroupUser)
-		return _dt["data"], xerror.Wrap(yqPost(t.c, _UpdateGroupMember(groupId, username), data, &_dt), "YQGroup.UpdateGroupMember")
+		return _dt["data"], xerror.Wrap(yqPut(t.c, _UpdateGroupMember(groupId, username), data, &_dt), "YQGroup.UpdateGroupMember")
 	}
 }
 
