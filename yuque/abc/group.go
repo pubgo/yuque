@@ -3,10 +3,10 @@
 package abc
 
 import (
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
-type YuqueGroup interface {
+type YuQueGroup interface {
 	// 获取某个用户的加入的组织列表
 	GetUserGroups(userId string) (_ []*models.Group, err error)
 	GetUserGroupsByName(username string) (_ []*models.Group, err error)

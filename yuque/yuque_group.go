@@ -3,12 +3,12 @@ package yuque
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/abc"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
 var (
-	_                  abc.YuqueGroup = (*YQGroup)(nil)
+	_                  abc.YuQueGroup = (*YQGroup)(nil)
 	_GetUserGroups                    = _url("/users/%s/groups")
 	_GetMyPubGroups                   = _url("/groups")
 	_CreateGroup                      = _url("/groups")

@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Popular struct {
 	ID          int         `json:"id"`
@@ -22,7 +24,7 @@ type Popular struct {
 		LikesCount int         `json:"likes_count"`
 		CreatedAt  time.Time   `json:"created_at"`
 		UpdatedAt  time.Time   `json:"updated_at"`
-		Book       Book        `json:"book"`
+		Book       Book  `json:"book"`
 		LastEditor interface{} `json:"last_editor"`
 		Share      interface{} `json:"share"`
 		Serializer string      `json:"_serializer"`

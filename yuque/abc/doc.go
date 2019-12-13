@@ -2,9 +2,11 @@
 
 package abc
 
-import "github.com/pubgo/yuque/models"
+import (
+	"github.com/pubgo/yuque/yuque/models"
+)
 
-type YuqueDoc interface {
+type YuQueDoc interface {
 	// 获取一个仓库的文档列表
 	GetDocs(RepoId string) (_ []*models.Doc, err error)
 	GetDocsByName(RepoName string) (_ []*models.Doc, err error)

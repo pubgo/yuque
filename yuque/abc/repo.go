@@ -2,9 +2,11 @@
 
 package abc
 
-import "github.com/pubgo/yuque/models"
+import (
+	"github.com/pubgo/yuque/yuque/models"
+)
 
-type YuqueRepo interface {
+type YuQueRepo interface {
 	// 获取一个仓库的文档列表
 	GetUserRepos(userId string) func(string, int) (_ []*models.Book, err error)
 	GetUserReposByName(username string) func(string, int) (_ []*models.Book, err error)

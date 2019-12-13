@@ -3,12 +3,12 @@ package yuque
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/abc"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
 var (
-	_          abc.YuqueDoc = (*YQDoc)(nil)
+	_          abc.YuQueDoc = (*YQDoc)(nil)
 	_GetDocs                = _url("/repos/%s/docs")
 	_CreateDoc              = _url("/repos/%s/docs")
 	_GetDoc                 = _url("/repos/%s/docs/%s")

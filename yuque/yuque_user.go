@@ -3,12 +3,12 @@ package yuque
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/abc"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
 var (
-	_        abc.YuqueUser = (*YQUser)(nil)
+	_        abc.YuQueUser = (*YQUser)(nil)
 	_GetUser               = _url("/users/%s")
 	_GetMe                 = _url("/user")
 )

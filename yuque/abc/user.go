@@ -3,10 +3,10 @@
 package abc
 
 import (
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
-type YuqueUser interface {
+type YuQueUser interface {
 	// 获取认证的用户的个人信息 [需要认证]
 	// 获取当前 Token 对应的用户的个人信息
 	// 返回结果如同 GET /users/:login

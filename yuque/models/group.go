@@ -4,15 +4,15 @@ package models
 // https://www.yuque.com/yuque/developer/groupuserserializer
 
 type GroupUser struct {
-	CreatedAt string      `json:"created_at"`
-	Group     interface{} `json:"group"`
-	GroupID   int         `json:"group_id"`
-	ID        int         `json:"id"`
-	Role      int         `json:"role"`
-	Status    int         `json:"status"`
-	UpdatedAt string      `json:"updated_at"`
-	User      UserDetail  `json:"user"`
-	UserID    int         `json:"user_id"`
+	CreatedAt string           `json:"created_at"`
+	Group     interface{}      `json:"group"`
+	GroupID   int              `json:"group_id"`
+	ID        int              `json:"id"`
+	Role      int              `json:"role"`
+	Status    int              `json:"status"`
+	UpdatedAt string           `json:"updated_at"`
+	User      UserDetail `json:"user"`
+	UserID    int              `json:"user_id"`
 }
 
 type Group struct {

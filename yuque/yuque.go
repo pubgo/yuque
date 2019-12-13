@@ -6,7 +6,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xenv"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
+	"github.com/pubgo/yuque/yuque/abc"
 	"time"
 )
 
@@ -20,22 +20,22 @@ type YuQue struct {
 	yqClient         *resty.Client
 }
 
-func (t *YuQue) Group() abc.YuqueGroup {
+func (t *YuQue) Group() abc.YuQueGroup {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQGroup{c: t.yqClient.R()}
 }
 
-func (t *YuQue) User() abc.YuqueUser {
+func (t *YuQue) User() abc.YuQueUser {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQUser{c: t.yqClient.R()}
 }
 
-func (t *YuQue) Repo() abc.YuqueRepo {
+func (t *YuQue) Repo() abc.YuQueRepo {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQRepo{c: t.yqClient.R()}
 }
 
-func (t *YuQue) Doc() abc.YuqueDoc {
+func (t *YuQue) Doc() abc.YuQueDoc {
 	xerror.PanicT(t.yqClient == nil, "yuque client is null")
 	return YQDoc{c: t.yqClient.R()}
 }

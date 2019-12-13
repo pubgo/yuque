@@ -2,8 +2,8 @@ package tests
 
 import (
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/models"
 	"github.com/pubgo/yuque/yuque"
+	"github.com/pubgo/yuque/yuque/models"
 	"testing"
 )
 
@@ -23,7 +23,6 @@ func TestGetGroup(t *testing.T) {
 	yuque.Debug(xerror.PanicErr(yq.Group().GetGroup("kooksee")))
 }
 
-
 func TestCreateGroup(t *testing.T) {
 	defer xerror.Resp(func(err xerror.IErr) {
 		if err.Is(yuque.ErrParametersIncorrectOrMissing) {
@@ -37,7 +36,6 @@ func TestCreateGroup(t *testing.T) {
 		Description: "测试",
 	}))
 }
-
 
 func TestUpdateGroup(t *testing.T) {
 	defer xerror.Assert()

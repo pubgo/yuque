@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xerror"
-	"github.com/pubgo/yuque/abc"
-	"github.com/pubgo/yuque/models"
+	"github.com/pubgo/yuque/yuque/abc"
+	"github.com/pubgo/yuque/yuque/models"
 )
 
 var (
-	_                abc.YuqueRepo = (*YQRepo)(nil)
+	_                abc.YuQueRepo = (*YQRepo)(nil)
 	_GetUserRepos                  = _url("/users/%s/repos")
 	_GetGroupRepos                 = _url("/groups/%s/repos")
 	_CreateGroupRepo               = _url("/groups/%s/repos")
