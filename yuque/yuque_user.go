@@ -8,25 +8,25 @@ import (
 )
 
 var (
-	_        abc.YuQueUser = (*YQUser)(nil)
+	_        abc.YuQueUser = (*yqUserImpl)(nil)
 	_GetUser               = _url("/users/%s")
 	_GetMe                 = _url("/user")
 )
 
-type YQUser struct {
-	c *resty.Request
+type yqUserImpl struct {
+	c *resty.Client
 }
 
-func (t YQUser) GetMe() (res *models.UserDetail, err error) {
+func (t yqUserImpl) GetMe() (res *models.UserDetail, err error) {
 	_dt := make(map[string]*models.UserDetail)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, _GetMe(), nil, &_dt), "YQUser.GetMe")
+	return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetMe(), nil, &_dt), "YQUser.GetMe")
 }
 
-func (t YQUser) GetUser(userId string) (res *models.UserDetail, err error) {
+func (t yqUserImpl) GetUser(userId string) (res *models.UserDetail, err error) {
 	_dt := make(map[string]*models.UserDetail)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, _GetUser(userId), nil, &_dt), "YQUser.GetUser")
+	return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetUser(userId), nil, &_dt), "YQUser.GetUser")
 }
 
-func (t YQUser) GetUserByName(username string) (res *models.UserDetail, err error) {
+func (t yqUserImpl) GetUserByName(username string) (res *models.UserDetail, err error) {
 	return t.GetUser(username)
 }

@@ -20,7 +20,7 @@ func TestGetMyPubGroups(t *testing.T) {
 
 func TestGetGroup(t *testing.T) {
 	defer xerror.Assert()
-	yuque.Debug(xerror.PanicErr(yq.Group().GetGroup("kooksee")))
+	xerror.Debug(xerror.PanicErr(yq.Group().GetGroup("kooksee")))
 }
 
 func TestCreateGroup(t *testing.T) {
@@ -39,7 +39,7 @@ func TestCreateGroup(t *testing.T) {
 
 func TestUpdateGroup(t *testing.T) {
 	defer xerror.Assert()
-	yuque.Debug(xerror.PanicErr(yq.Group().UpdateGroup("253324")(&models.GroupCreate{
+	xerror.Debug(xerror.PanicErr(yq.Group().UpdateGroup("253324")(&models.GroupCreate{
 		Name:        "kooksee",
 		Login:       "kooksee",
 		Description: "个人知识",

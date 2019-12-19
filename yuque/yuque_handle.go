@@ -7,18 +7,13 @@ import (
 	"net/http"
 )
 
-const BaseUrlPrefix = "/api/v2"
-
 func yqVerb(c *resty.Request, url string, pathParams map[string]string, queryParams map[string]string, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
-	url = BaseUrlPrefix + url
 	return
 }
 
 func yqPut(c *resty.Request, url string, body interface{}, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
-
-	url = BaseUrlPrefix + url
 
 	c.SetHeader("Content-Type", "application/json")
 
@@ -43,8 +38,6 @@ func yqPut(c *resty.Request, url string, body interface{}, dt interface{}) (err 
 func yqDelete(c *resty.Request, url string, queryParams map[string]string, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
 
-	url = BaseUrlPrefix + url
-
 	if queryParams != nil {
 		c.SetQueryParams(queryParams)
 	}
@@ -64,8 +57,6 @@ func yqDelete(c *resty.Request, url string, queryParams map[string]string, dt in
 
 func yqGet(c *resty.Request, url string, queryParams map[string]string, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
-
-	url = BaseUrlPrefix + url
 
 	if queryParams != nil {
 		c.SetQueryParams(queryParams)
@@ -88,8 +79,6 @@ func yqGet(c *resty.Request, url string, queryParams map[string]string, dt inter
 
 func yqPost(c *resty.Request, url string, body interface{}, dt interface{}) (err error) {
 	defer xerror.RespErr(&err)
-
-	url = BaseUrlPrefix + url
 
 	c.SetHeader("Content-Type", "application/json")
 

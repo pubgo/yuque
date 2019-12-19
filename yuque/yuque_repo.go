@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	_                abc.YuQueRepo = (*YQRepo)(nil)
+	_                abc.YuQueRepo = (*yqRepoImpl)(nil)
 	_GetUserRepos                  = _url("/users/%s/repos")
 	_GetGroupRepos                 = _url("/groups/%s/repos")
 	_CreateGroupRepo               = _url("/groups/%s/repos")
@@ -21,101 +21,101 @@ var (
 	_SearchRepo                    = _url("/search/repos?q=%s&type=%s")
 )
 
-type YQRepo struct {
-	c *resty.Request
+type yqRepoImpl struct {
+	c *resty.Client
 }
 
-func (t YQRepo) CreateUserRepo(userId string) func(data *models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) CreateUserRepo(userId string) func(data *models.BookCreate) (_ *models.Book, err error) {
 	return func(data *models.BookCreate) (_ *models.Book, err error) {
 		_dt := make(map[string]*models.Book)
-		return _dt["data"], xerror.Wrap(yqPost(t.c, _CreateUserRepo(userId), data, &_dt), "YQRepo.CreateUserRepo")
+		return _dt["data"], xerror.Wrap(yqPost(t.c.R(), _CreateUserRepo(userId), data, &_dt), "YQRepo.CreateUserRepo")
 	}
 }
 
-func (t YQRepo) CreateUserRepoByName(username string) func(data *models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) CreateUserRepoByName(username string) func(data *models.BookCreate) (_ *models.Book, err error) {
 	return t.CreateUserRepo(username)
 }
 
-func (t YQRepo) CreateGroupRepo(groupId string) func(data *models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) CreateGroupRepo(groupId string) func(data *models.BookCreate) (_ *models.Book, err error) {
 	return func(data *models.BookCreate) (_ *models.Book, err error) {
 		_dt := make(map[string]*models.Book)
-		return _dt["data"], xerror.Wrap(yqPost(t.c, _CreateGroupRepo(groupId), data, &_dt), "YQRepo.CreateGroupRepo")
+		return _dt["data"], xerror.Wrap(yqPost(t.c.R(), _CreateGroupRepo(groupId), data, &_dt), "YQRepo.CreateGroupRepo")
 	}
 }
 
-func (t YQRepo) CreateGroupRepoByName(groupName string) func(data *models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) CreateGroupRepoByName(groupName string) func(data *models.BookCreate) (_ *models.Book, err error) {
 	return t.CreateGroupRepo(groupName)
 }
 
-func (t YQRepo) GetRepo(repoId string) func(typ string) (_ *models.Book, err error) {
+func (t yqRepoImpl) GetRepo(repoId string) func(typ string) (_ *models.Book, err error) {
 	return func(typ string) (_ *models.Book, err error) {
 		_dt := make(map[string]*models.Book)
-		return _dt["data"], xerror.Wrap(yqGet(t.c, _GetRepo(repoId), map[string]string{"type": typ}, &_dt), "YQRepo.GetRepo")
+		return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetRepo(repoId), map[string]string{"type": typ}, &_dt), "YQRepo.GetRepo")
 	}
 }
 
-func (t YQRepo) GetRepoByName(repoName string) func(string) (_ *models.Book, err error) {
+func (t yqRepoImpl) GetRepoByName(repoName string) func(string) (_ *models.Book, err error) {
 	return t.GetRepo(repoName)
 }
 
-func (t YQRepo) UpdateRepo(repoId string) func(*models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) UpdateRepo(repoId string) func(*models.BookCreate) (_ *models.Book, err error) {
 	return func(data *models.BookCreate) (_ *models.Book, err error) {
 		_dt := make(map[string]*models.Book)
-		return _dt["data"], xerror.Wrap(yqPut(t.c, _UpdateRepo(repoId), data, &_dt), "YQRepo.UpdateRepo")
+		return _dt["data"], xerror.Wrap(yqPut(t.c.R(), _UpdateRepo(repoId), data, &_dt), "YQRepo.UpdateRepo")
 	}
 }
 
-func (t YQRepo) UpdateRepoByName(repoName string) func(*models.BookCreate) (_ *models.Book, err error) {
+func (t yqRepoImpl) UpdateRepoByName(repoName string) func(*models.BookCreate) (_ *models.Book, err error) {
 	return t.UpdateRepo(repoName)
 }
 
-func (t YQRepo) DelRepo(repoId string) (_ *models.Book, err error) {
+func (t yqRepoImpl) DelRepo(repoId string) (_ *models.Book, err error) {
 	_dt := make(map[string]*models.Book)
-	return _dt["data"], xerror.Wrap(yqDelete(t.c, _DelRepo(repoId), nil, &_dt), "YQRepo.DelRepo")
+	return _dt["data"], xerror.Wrap(yqDelete(t.c.R(), _DelRepo(repoId), nil, &_dt), "YQRepo.DelRepo")
 }
 
-func (t YQRepo) DelByName(repoName string) (_ *models.Book, err error) {
+func (t yqRepoImpl) DelByName(repoName string) (_ *models.Book, err error) {
 	return t.DelRepo(repoName)
 }
 
-func (t YQRepo) GetRepoToc(repoId string) (_ *models.BookToc, err error) {
+func (t yqRepoImpl) GetRepoToc(repoId string) (_ *models.BookToc, err error) {
 	_dt := make(map[string]*models.BookToc)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, _GetRepoToc(repoId), nil, &_dt), "YQRepo.GetRepoToc")
+	return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetRepoToc(repoId), nil, &_dt), "YQRepo.GetRepoToc")
 }
 
-func (t YQRepo) GetRepoTocByName(repoName string) (_ *models.BookToc, err error) {
+func (t yqRepoImpl) GetRepoTocByName(repoName string) (_ *models.BookToc, err error) {
 	return t.GetRepoToc(repoName)
 }
 
-func (t YQRepo) SearchRepo(q, typ string) (_ *models.Search, err error) {
+func (t yqRepoImpl) SearchRepo(q, typ string) (_ *models.Search, err error) {
 	_dt := make(map[string]*models.Search)
-	return _dt["data"], xerror.Wrap(yqGet(t.c, _SearchRepo(), map[string]string{"q": q, "type": typ}, &_dt), "YQRepo.SearchRepo")
+	return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _SearchRepo(), map[string]string{"q": q, "type": typ}, &_dt), "YQRepo.SearchRepo")
 }
 
-func (t YQRepo) GetUserRepos(userId string) func(typ string, offset int) (_ []*models.Book, err error) {
+func (t yqRepoImpl) GetUserRepos(userId string) func(typ string, offset int) (_ []*models.Book, err error) {
 	return func(typ string, offset int) (_ []*models.Book, err error) {
 		_dt := make(map[string][]*models.Book)
-		return _dt["data"], xerror.Wrap(yqGet(t.c, _GetUserRepos(userId), map[string]string{
+		return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetUserRepos(userId), map[string]string{
 			"type":   typ,
 			"offset": fmt.Sprintf("%d", offset),
 		}, &_dt), "YQRepo.GetUserRepos")
 	}
 }
 
-func (t YQRepo) GetUserReposByName(username string) func(typ string, offset int) (_ []*models.Book, err error) {
+func (t yqRepoImpl) GetUserReposByName(username string) func(typ string, offset int) (_ []*models.Book, err error) {
 	return t.GetUserRepos(username)
 }
 
-func (t YQRepo) GetGroupRepos(groupId string) func(typ string, offset int) (_ []*models.Book, err error) {
+func (t yqRepoImpl) GetGroupRepos(groupId string) func(typ string, offset int) (_ []*models.Book, err error) {
 	return func(typ string, offset int) (_ []*models.Book, err error) {
 		_dt := make(map[string][]*models.Book)
-		return _dt["data"], xerror.Wrap(yqGet(t.c, _GetGroupRepos(groupId), map[string]string{
+		return _dt["data"], xerror.Wrap(yqGet(t.c.R(), _GetGroupRepos(groupId), map[string]string{
 			"type":   typ,
 			"offset": fmt.Sprintf("%d", offset),
 		}, &_dt), "YQRepo.GetGroupRepos")
 	}
 }
 
-func (t YQRepo) GetGroupReposByName(groupName string) func(string, int) (_ []*models.Book, err error) {
+func (t yqRepoImpl) GetGroupReposByName(groupName string) func(string, int) (_ []*models.Book, err error) {
 	return t.GetGroupRepos(groupName)
 }

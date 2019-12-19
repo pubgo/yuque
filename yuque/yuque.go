@@ -5,42 +5,56 @@ package yuque
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/pubgo/g/xenv"
-	"github.com/pubgo/g/xerror"
 	"github.com/pubgo/yuque/yuque/abc"
+	"log"
 	"time"
 )
 
-type YuQue struct {
+func New() abc.IYuque {
+	var _ abc.IYuque = (*yuque)(nil)
+
+	_yq := &yuque{}
+	_yq._init()
+	return _yq
+}
+
+type yuque struct {
 	AppName          string // default test
 	RetryCount       int    // default 3
 	RetryWaitTime    int    // default 5 second
 	RetryMaxWaitTime int    // default 20 second
 	Timeout          int    // default 60 second
 	Debug            bool   // default true
-	yqClient         *resty.Client
+	client           *resty.Client
 }
 
-func (t *YuQue) Group() abc.YuQueGroup {
-	xerror.PanicT(t.yqClient == nil, "yuque client is null")
-	return YQGroup{c: t.yqClient.R()}
+func (t *yuque) checkClient() {
+	if t.client == nil {
+		log.Fatal("yuque client is null")
+	}
 }
 
-func (t *YuQue) User() abc.YuQueUser {
-	xerror.PanicT(t.yqClient == nil, "yuque client is null")
-	return YQUser{c: t.yqClient.R()}
+func (t *yuque) Group() abc.YuQueGroup {
+	t.checkClient()
+	return &yqGroupImpl{c: t.client}
 }
 
-func (t *YuQue) Repo() abc.YuQueRepo {
-	xerror.PanicT(t.yqClient == nil, "yuque client is null")
-	return YQRepo{c: t.yqClient.R()}
+func (t *yuque) User() abc.YuQueUser {
+	t.checkClient()
+	return &yqUserImpl{c: t.client}
 }
 
-func (t *YuQue) Doc() abc.YuQueDoc {
-	xerror.PanicT(t.yqClient == nil, "yuque client is null")
-	return YQDoc{c: t.yqClient.R()}
+func (t *yuque) Repo() abc.YuQueRepo {
+	t.checkClient()
+	return &yqRepoImpl{c: t.client}
 }
 
-func (t *YuQue) _init() {
+func (t *yuque) Doc() abc.YuQueDoc {
+	t.checkClient()
+	return &yqDocImpl{c: t.client}
+}
+
+func (t *yuque) _init() {
 	if t.AppName == "" {
 		t.AppName = "test"
 	}
@@ -64,10 +78,10 @@ func (t *YuQue) _init() {
 	t.Debug = xenv.IsDebug()
 }
 
-func (t *YuQue) AddAuth(token string) {
+func (t *yuque) Auth(token string) abc.IYuque {
 	t._init()
 
-	t.yqClient = resty.New().
+	t.client = resty.New().
 		SetDebug(t.Debug).
 		SetContentLength(true).
 		SetHostURL("https://www.yuque.com").
@@ -80,10 +94,6 @@ func (t *YuQue) AddAuth(token string) {
 			"User-Agent":   t.AppName,
 			"X-Auth-Token": token,
 		})
-}
 
-func New() *YuQue {
-	_yq := &YuQue{}
-	_yq._init()
-	return _yq
+	return t
 }

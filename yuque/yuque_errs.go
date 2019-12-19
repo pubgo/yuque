@@ -6,16 +6,15 @@ import (
 )
 
 var (
-	ErrYuque                        = xerror.NewXErr("YuQue")
-	ErrParametersIncorrectOrMissing = ErrYuque.New("parameters incorrect or missing")
-	ErrAuthIncorrect                = ErrYuque.New("auth incorrect")
-	ErrPermissionsMissing           = ErrYuque.New("permissions missing")
-	ErrNotFound                     = ErrYuque.New("not found")
-	ErrServer                       = ErrYuque.New("server error")
-	ErrRateLimitOver                = ErrYuque.New("too many requests")
-	ErrUnknownCode                  = ErrYuque.New("unknown code")
-
-	ErrJsonUnmarshal = ErrYuque.New("json unmarshal error")
+	Err                             = xerror.NewXErr("YuQue")
+	ErrParametersIncorrectOrMissing = Err.New("parameters incorrect or missing")
+	ErrAuthIncorrect                = Err.New("auth incorrect")
+	ErrPermissionsMissing           = Err.New("permissions missing")
+	ErrNotFound                     = Err.New("not found")
+	ErrServer                       = Err.New("server error")
+	ErrRateLimitOver                = Err.New("too many requests")
+	ErrUnknownCode                  = Err.New("unknown code")
+	ErrJsonUnmarshal                = Err.New("json unmarshal error")
 )
 
 func checkCode(code int) error {
